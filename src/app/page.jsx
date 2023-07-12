@@ -1,3 +1,4 @@
+"use client";
 import {
   ApolloClient,
   InMemoryCache,
@@ -5,31 +6,32 @@ import {
   gql,
 } from "@apollo/client";
 import Image from "next/image";
+import { useState } from "react";
 
-export async function getStaticProps() {
-  const { data } = await client.query({
-    query: gql`
-      query Countries {
-        countries {
-          code
-          name
-          emoji
+export default function Home({}) {
+  const [countries, setCountries] = useState([
+    { code: 1, name: "hello", emoji: "emoji" },
+  ]);
+
+  const getData = async () => {
+    const { data } = await ApolloClient.query({
+      query: gql`
+        query Countries {
+          countries {
+            code
+            name
+            emoji
+          }
         }
-      }
-    `,
-  });
+      `,
+    });
 
-  return {
-    props: {
-      countries: data.countries.slice(0, 4),
-    },
+    setCountries({ countries: data.countries.slice(0, 4) });
   };
-}
 
-export default function Home({ countries }) {
-  <div className={styles.grid}>
-    {countries.map((country) => (
-      <div key={country.code} className={styles.card}>
+  function renderElement() {
+    return countries.map((country) => (
+      <div key={country.code}>
         <h3>
           <a
             href="#country-name"
@@ -57,6 +59,8 @@ export default function Home({ countries }) {
           {country.code} - {country.emoji}
         </p>
       </div>
-    ))}
-  </div>;
+    ));
+  }
+
+  return <div>{renderElement()}</div>;
 }
