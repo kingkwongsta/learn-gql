@@ -6,15 +6,16 @@ import {
   gql,
 } from "@apollo/client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home({}) {
-  const [countries, setCountries] = useState([
-    { code: 1, name: "hello", emoji: "emoji" },
-  ]);
+  // const [countries, setCountries] = useState([
+  //   { code: 1, name: "hello", emoji: "emoji" },
+  // ]);
+  const [countries, setCountries] = useState();
 
   const getData = async () => {
-    const { data } = await ApolloClient.query({
+    const { data } = await client.query({
       query: gql`
         query Countries {
           countries {
@@ -27,7 +28,15 @@ export default function Home({}) {
     });
 
     setCountries({ countries: data.countries.slice(0, 4) });
+    console.log("set State done");
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
+  function handleClick() {
+    console.log(countries);
+  }
 
   function renderElement() {
     return countries.map((country) => (
@@ -62,5 +71,12 @@ export default function Home({}) {
     ));
   }
 
-  return <div>{renderElement()}</div>;
+  return (
+    <div>
+      <div>{countries ? renderElement() : <p>hello world</p>}</div>
+      <div>
+        <button onClick={handleClick}>Push ME</button>
+      </div>
+    </div>
+  );
 }
