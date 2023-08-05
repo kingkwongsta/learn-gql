@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import ReactDOM from "react-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import Space from "./components/space";
 
 const client = new ApolloClient({
   uri: "https://api.spacex.land/graphql/",
@@ -13,6 +13,7 @@ export default function Home() {
     <ApolloProvider client={client}>
       <main>
         <h2>Hello There</h2>
+        <Space />
       </main>
     </ApolloProvider>
   );
