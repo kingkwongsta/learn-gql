@@ -10,11 +10,8 @@ const client = new ApolloClient({
 
 export default function Home() {
   return (
-    <ApolloProvider client={client}>
-      <main>
-        <h2>Hello There</h2>
-        <Space />
-      </main>
-    </ApolloProvider>
+    <main>
+      <div></div>
+    </main>
   );
 }
