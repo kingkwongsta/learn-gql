@@ -2,14 +2,17 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "startgql": "node backend/index.js"
   },
   "dependencies": {
     "@apollo/client": "^3.7.17",
+    "@apollo/server": "^4.9.1",
     "autoprefixer": "10.4.14",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
